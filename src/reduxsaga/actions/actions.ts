@@ -36,3 +36,13 @@ export const addProductSuccess = createAction('ADD_PRODUCT_SUCCESS',(prd:Product
         }
     }
 });
+
+export const deleteProductSuccess= createAction('DELETE_PRODUCT',(prd:ProductInfo)=>{
+    console.log(`In delete Action ${JSON.stringify(prd)}`);
+   return {
+    payload: {
+        product:prd // the input data received from the action dispatched from UI 
+    }
+   }  
+});
+

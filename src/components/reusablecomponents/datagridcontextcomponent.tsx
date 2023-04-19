@@ -1,10 +1,22 @@
 import React, {useContext} from 'react'
 import { DataContext } from './../../datacontext'
+import { Dispatch } from 'redux';
+import {useDispatch} from 'react-redux';
+
+import {deleteProductSuccess} from '../../reduxsaga/actions/actions'
+
 
 export default function DataGridComponent() {
   let dataSource = useContext(DataContext) as Array<object>;
  
- 
+  const dispatch:Dispatch<any> = useDispatch();
+  
+  const deleteProduct=(product:any)=>{
+    // dispatch the action
+    console.log("CLICKED",product)
+    dispatch(deleteProductSuccess(product));
+};
+
   
   if(dataSource === undefined || dataSource === null || dataSource.length === 0){
     return (<div>The Object is undefined</div>);
@@ -22,6 +34,7 @@ export default function DataGridComponent() {
                         <th key={idx}>{col}</th>
                      ))
                    }
+                   <th>Actions</th>
                  </tr>  
               </thead> 
               <tbody>
@@ -34,7 +47,8 @@ export default function DataGridComponent() {
                                      {record[col as keyof typeof record]}
                                 </td>
                              })
-                         }
+                            }
+                            <td> <button onClick={()=>deleteProduct(record)} >Delete</button></td>
                        </tr>     
                     ))
                  }

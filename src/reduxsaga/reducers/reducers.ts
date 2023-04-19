@@ -5,7 +5,7 @@ import { createReducer } from "@reduxjs/toolkit";
 // the ProductInfo class
 import { ProductInfo } from "../../models/productinfo";
 // actions those are monitored
-import {getProducts, getProductsSuccess, addProduct, addProductSuccess} from './../actions/actions';
+import {getProducts, getProductsSuccess, addProduct, addProductSuccess, deleteProductSuccess} from './../actions/actions';
 
 // 1. define initial state
 const initialState:IAppState = {
@@ -23,6 +23,10 @@ export const reducer = createReducer(initialState, (builder)=>{
         state.product = action.payload.product; // newly added record
         // mutate the prodiucts state using the newly created product  
         state.products = [...state.products, action.payload.product];
-    });
+    }).addCase(deleteProductSuccess,(state,action)=>{
+        state.product = action.payload.product; // to delete record
+        let filteredList = state.products.filter((i)=>i.ProductId !== state.product.ProductId);
+        state.products = [...filteredList];
+    });;
 });
 
